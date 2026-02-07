@@ -8,7 +8,7 @@ import pyautogui as pag
 import subprocess
 
 pag.FAILSAFE = False
-pag.PAUSE = 0.0000000000000001
+pag.PAUSE = False
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 user_functions_dir = os.path.join(script_dir, "user_functions")
