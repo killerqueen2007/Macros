@@ -11,7 +11,7 @@
           "type": "click_loop",
           "Interval": 0.001,
           "run_once": false,
-          "modifier": "ctrl & alt",
+          "modifier": "ctrl & shift",
           "toggle": false,
           "key_to_press": "left click"
         }
@@ -21,4 +21,5 @@
   "global": {
     "loop_delay": 0.001
   }
+
 }
