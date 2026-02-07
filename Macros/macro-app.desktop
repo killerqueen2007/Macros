@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=Macro Application
+Comment=Keyboard macro manager and automation tool
+# Replace /path/to/macro/app with the actual path
+Exec=/path/to/macro/app/start.sh
+# Or use: Exec=sudo /usr/bin/python3 /path/to/macro/app/main.py
+Icon=/path/to/macro/app/Macro.ico
+Terminal=false
+Hidden=false
+NoDisplay=false
+Categories=Utility;System;
+X-GNOME-Autostart-enabled=true
+StartupNotify=false

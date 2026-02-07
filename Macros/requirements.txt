@@ -1,0 +1,47 @@
+# Core macro application dependencies (Cross-platform)
+pystray
+Pillow
+keyboard
+pyautogui
+psutil
+
+# HTTP requests and API interactions
+requests
+
+# Discord bot functionality (optional - uncomment if needed)
+# py-cord
+
+# ==========================================
+# Platform-specific dependencies
+# ==========================================
+
+# Windows-only dependencies
+# Install on Windows with: pip install pywin32
+pywin32; sys_platform == 'win32'
+
+# Linux users may need these system packages:
+# Debian/Ubuntu: sudo apt install python3-tk xdotool
+# Fedora: sudo dnf install python3-tkinter xdotool
+# Arch: sudo pacman -S tk xdotool
+
+# ==========================================
+# Installation instructions
+# ==========================================
+
+# Cross-platform install:
+#   pip install -r requirements.txt
+
+# This will automatically install:
+# - All common dependencies on all platforms
+# - pywin32 only on Windows
+# - No Linux-specific packages (install via system package manager)
+
+# ==========================================
+# Additional notes
+# ==========================================
+
+# macOS users may need:
+#   brew install python-tk
+
+# For development/testing across platforms:
+#   pip install -r requirements.txt

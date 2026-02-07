@@ -1,0 +1,20 @@
+[Unit]
+Description=Macro Application - Keyboard Macro Manager
+After=graphical.target
+
+[Service]
+Type=simple
+# Replace YOUR_USERNAME with your actual username
+User=YOUR_USERNAME
+# Replace with your actual display
+Environment="DISPLAY=:0"
+# Replace YOUR_USERNAME with your actual username
+Environment="XAUTHORITY=/home/YOUR_USERNAME/.Xauthority"
+# Replace /path/to/macro/app with the actual path to the application
+WorkingDirectory=/path/to/macro/app
+ExecStart=/usr/bin/python3 /path/to/macro/app/main.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target
