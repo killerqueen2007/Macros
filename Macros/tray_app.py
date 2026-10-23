@@ -13,7 +13,7 @@ from config import BASE_DIR, CONFIG_PATH, load_config
 from console import ConsoleWindow
 from icon import load_icon
 from macros import DynamicMacroRunner
-from mouse_info import open_mouse_info
+from hotkeys import open_mouse_info
 from suppress import suppressor
 from window_utils import get_foreground_process
 
@@ -23,6 +23,8 @@ MOUSE_INFO_HOTKEY = "ctrl+shift+alt+m"
 
 
 class TrayApp:
+    
+    
     def __init__(self):
         self.exit_event = threading.Event()
         self.force_recheck = False
