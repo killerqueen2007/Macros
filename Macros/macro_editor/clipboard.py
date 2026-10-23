@@ -48,9 +48,10 @@ def _load(root, kind):
 def _clean_macro(m):
     if not isinstance(m, dict) or m.get("type") not in TYPES or not isinstance(m.get("name"), str):
         return None
-    fn = m.get("function_name", "")
-    if not isinstance(fn, str) or any(c in fn for c in "/\\:"):   # no paths: it runs scripts by name
-        return None
+    for field in ("function_name", "recording_name"):   # these name files in our folders: no paths allowed
+        v = m.get(field, "")
+        if not isinstance(v, str) or any(c in v for c in "/\\:"):
+            return None
     return {k: v for k, v in m.items() if k in KNOWN_KEYS}
 
 
