@@ -6,8 +6,10 @@ import time
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
 USER_FUNCTIONS_DIR = os.path.join(BASE_DIR, "user_functions")
+RECORDINGS_DIR = os.path.join(BASE_DIR, "user_recd_mac")
 
 os.makedirs(USER_FUNCTIONS_DIR, exist_ok=True)
+os.makedirs(RECORDINGS_DIR, exist_ok=True)
 
 
 def load_config(path=CONFIG_PATH):
