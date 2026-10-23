@@ -7,6 +7,7 @@ import keyboard
 
 import actions
 from config import CONFIG_PATH, load_config
+from recordings import load_events
 from suppress import suppressor
 from user_functions import run_function_by_name
 
@@ -29,6 +30,7 @@ class DynamicMacroRunner:
         self.threads = {}      # name -> Thread (hold-style one-shot macros)
         self.loop_flags = {}   # name -> {"active": bool} (click loops / toggles)
         self.triggered = {}    # name -> bool (edge detection for run_once / toggle)
+        self._warned = set()   # recordings we've already reported as missing
 
         self.macros = []       # list of (macro_dict, modifier_tuple)
         self.global_settings = {}
@@ -134,7 +136,7 @@ class DynamicMacroRunner:
             elif pressed:
                 self._hold(macro, is_loop)
 
-            elif is_loop:
+            elif is_loop or macro["type"] == "recording":   # key released: cut a click loop / recording short
                 flag = self.loop_flags.get(name)
                 if flag:
                     flag["active"] = False
@@ -162,16 +164,36 @@ class DynamicMacroRunner:
     def _run_toggle_loop(self, macro, flag):
         interval = macro.get("Interval", 0.1)
         while flag["active"]:
-            self.run_macro(macro)
+            self.run_macro(macro, flag)
             if macro["type"] != "keyboard_press":  # keyboard_press already sleeps
                 time.sleep(interval)
 
-    def run_macro(self, macro):
+    def run_macro(self, macro, flag=None):
         kind = macro["type"]
         if kind == "keyboard_press":
             actions.press_key(macro["key_to_press"])
             time.sleep(macro.get("Interval", 0.05))
         elif kind == "function":
             run_function_by_name(macro["function_name"])
+        elif kind == "recording":
+            self._play_recording(macro, flag)
         else:
             print(f"[Error] Unknown macro type: {kind}")
+
+    def _play_recording(self, macro, flag=None):
+        name = macro.get("recording_name", "")
+        events = load_events(name)
+        if events is None:
+            if name not in self._warned:
+                self._warned.add(name)
+                print(f"[Error] Recording '{name}' is missing or invalid (user_recd_mac/{name}.json).")
+            return
+        own = flag is None
+        if own:   # run-once / hold: own flag so releasing the key or stop_all() can cut it short
+            flag = {"active": True}
+            self.loop_flags[macro["name"]] = flag
+        try:
+            actions.play_recording(events, flag)
+        finally:
+            if own:
+                flag["active"] = False
