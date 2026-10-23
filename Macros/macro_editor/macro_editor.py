@@ -1,7 +1,11 @@
 """Macro editor window. Pieces: widgets.py (lists/theme), macro_form.py + macro_fields.py (form),
 function_editor.py (scripts page), profile_store.py (config.json)."""
+import subprocess
+import sys
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
+
+from config import BASE_DIR
 
 from . import clipboard
 from .function_editor import FunctionEditor
@@ -29,6 +33,7 @@ class MacroEditor:
         self.store = Store()
         self.profile = None      # selected profile name
         self.macro_idx = None    # selected macro index (None = editing the profile itself)
+        self.recorder = None     # the recorder's process, while it is open
 
         self.main = self._build_main()
         self.funcs = FunctionEditor(root, on_back=self.show_main)
@@ -73,8 +78,10 @@ class MacroEditor:
         self.form = MacroForm(right, self.save)
         self.form.grid(row=0, column=1, sticky="nsew", padx=(20, 0))
 
-        tk.Button(main, text="⚙️", command=self.open_functions, font=("Segoe UI", 12), bd=0,
-                  highlightthickness=0, bg=BG, activebackground=BG, relief="flat").place(x=5, y=5)
+        # top-left toolbar: add a button = one tuple
+        for x, text, cmd in ((5, "⚙️", self.open_functions), (45, "⏺ Recorder", self.open_recorder)):
+            tk.Button(main, text=text, command=cmd, font=("Segoe UI", 12), bd=0, highlightthickness=0,
+                      bg=BG, activebackground=BG, relief="flat").place(x=x, y=5)
         return main
 
     def open_functions(self):
@@ -84,6 +91,18 @@ class MacroEditor:
     def show_main(self):
         self.main.tkraise()
         self.form.layout()   # picks up new/removed function files
+
+    def open_recorder(self):
+        if self.recorder and self.recorder.poll() is None:
+            return messagebox.showinfo("Recorder", "The recorder is already open.")
+        try:
+            # Own process on purpose: the recorder installs global keyboard hooks and calls
+            # keyboard.unhook_all() on close, which would wipe this app's macro/suppress hooks.
+            self.recorder = subprocess.Popen(
+                [sys.executable, "-m", "macro_editor.macro_recorder"], cwd=BASE_DIR,
+                creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+        except OSError as e:
+            messagebox.showerror("Error", f"Couldn't open the recorder:\n{e}")
 
     # --- selection / refresh ---------------------------------------------
     @property
