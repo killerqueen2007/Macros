@@ -1,167 +1,72 @@
 {
   "profiles": {
-    "OnBoot": {
-      "macros": [
-        {
-          "name": "OpenRGB",
-          "type": "function",
-          "function_name": "OpenRGB"
-        }
-      ]
-    },
     "Desktop": {
       "macros": [
         {
-          "name": "Left Click",
-          "key": "f24",
+          "name": "Click Loop",
+          "key": "f1",
           "type": "click_loop",
-          "modifier": null,
+          "key_to_press": "left click",
+          "Interval": 0.001,
           "run_once": false,
-          "toggle": false,
-          "Interval": 0.0001,
-          "key_to_press": "left click"
+          "modifier": null,
+          "suppress": false
         },
         {
-          "name": "Left Click Toggle",
-          "key": "f24",
+          "name": "Click Look w/ Toggle",
+          "key": "f2",
+          "type": "keyboard_press",
+          "key_to_press": "a",
+          "Interval": 0.001,
+          "run_once": false,
+          "modifier": null,
+          "toggle": true,
+          "suppress": false
+        },
+        {
+          "name": "Keyboard Press",
+          "key": "f3",
+          "type": "keyboard_press",
+          "key_to_press": "a",
+          "Interval": 0.001,
+          "run_once": false,
+          "modifier": null,
+          "toggle": false,
+          "suppress": false
+        },
+        {
+          "name": "Mouse Loop w/ Supress Test",
+          "key": "f4",
           "type": "click_loop",
-          "modifier": "alt",
-          "run_once": true,
-          "toggle": false,
+          "key_to_press": "left click",
           "Interval": 0.001,
-          "key_to_press": "left click"
-        },
-        {
-          "name": "Power Tower LED",
-          "key": "f8",
-          "type": "function",
-          "Interval": 0.001,
-          "run_once": true,
-          "modifier": "ctrl",
-          "toggle": false,
-          "function_name": "Power_Tower_LED",
+          "run_once": false,
+          "modifier": null,
           "suppress": true
         },
         {
-          "name": "Power Keyboard LED",
-          "key": "f7",
+          "name": "Function Test #Just move mouse",
+          "key": "f5",
           "type": "function",
           "Interval": 0.001,
           "run_once": true,
-          "modifier": "ctrl",
+          "modifier": null,
+          "function_name": "test",
           "toggle": false,
-          "function_name": "Keyboard_RGB",
+          "suppress": false
+        },
+        {
+          "name": "RecordedMacro",
+          "key": "f6",
+          "type": "recording",
+          "Interval": 0.001,
+          "run_once": false,
+          "modifier": null,
+          "recording_name": "Test",
+          "toggle": false,
           "suppress": true
         }
       ]
-    },
-    "Fortnite": {
-      "FortniteClient-Win64-Shipping.exe": {
-        "macros": [
-          {
-            "name": "Left Click",
-            "key": "f24",
-            "type": "click_loop",
-            "run_once": false,
-            "modifier": null,
-            "toggle": false,
-            "Interval": 0.001,
-            "key_to_press": "left click"
-          },
-          {
-            "name": "Shoot",
-            "key": "f24",
-            "type": "keyboard_press",
-            "run_once": false,
-            "modifier": null,
-            "toggle": false,
-            "Interval": 0.01,
-            "key_to_press": "q"
-          },
-          {
-            "name": "Pickup",
-            "key": "f23",
-            "type": "keyboard_press",
-            "modifier": null,
-            "run_once": false,
-            "toggle": false,
-            "Interval": 0.001,
-            "key_to_press": ","
-          }
-        ]
-      }
-    },
-    "Valorant": {
-      "VALORANT-Win64-Shipping.exe": {
-        "macros": []
-      }
-    },
-    "Minecraft": {
-      "javaw.exe": {
-        "macros": [
-          {
-            "name": "Left Click",
-            "key": "f24",
-            "type": "click_loop",
-            "run_once": false,
-            "modifier": null,
-            "toggle": false,
-            "Interval": 0.01,
-            "key_to_press": "left click"
-          },
-          {
-            "name": "Left Click Toggle",
-            "key": "f24",
-            "type": "click_loop",
-            "run_once": true,
-            "modifier": "alt",
-            "toggle": false,
-            "Interval": 0.001,
-            "key_to_press": "left click"
-          }
-        ]
-      }
-    },
-    "Roblox": {
-      "RobloxPlayerBeta.exe": {
-        "macros": [
-          {
-            "name": "Left Click",
-            "key": "f24",
-            "type": "click_loop",
-            "run_once": false,
-            "modifier": null,
-            "toggle": false,
-            "Interval": 0.001,
-            "key_to_press": "left click"
-          },
-          {
-            "name": "Left Click Toggle",
-            "key": "f24",
-            "type": "click_loop",
-            "run_once": true,
-            "modifier": "alt",
-            "toggle": false,
-            "Interval": 0.001,
-            "key_to_press": "left click"
-          },
-          {
-            "name": "new_macro",
-            "key": "shift",
-            "type": "keyboard_press",
-            "Interval": 0.01,
-            "run_once": false,
-            "modifier": null,
-            "toggle": false,
-            "key_to_press": "q"
-          }
-        ]
-      }
     }
-  },
-  "global": {
-    "loop_delay": 1e-07,
-    "force_recheck_key": "f22",
-    "ktest": "4"
   }
 }
