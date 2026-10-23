@@ -1,22 +1,13 @@
 """The macro form, as data.
-
-To add a field or checkbox to the editor: add ONE Field(...) line to FIELDS.
-  id         unique widget id
-  label      text, or a function(ctx) -> text (ctx.mode / .onboot / .type / .exe_allowed)
-  kind       "entry" (default), "combo" or "check"
-  values     combo choices: a list, or a function returning one
-  show       function(ctx) -> bool, when the row is visible
-  cfg        config.json key if it differs from id
-  conv       text -> value (raise ValueError for bad input)
-  omit_blank leave the key out of config.json when the box is empty
 Hidden fields are removed from the macro on save, so switching Type cleans up after itself.
 """
 from dataclasses import dataclass
 from typing import Any, Callable
 
+from recordings import list_recording_names
 from user_functions import list_function_names
 
-TYPES = ("keyboard_press", "click_loop", "function")
+TYPES = ("keyboard_press", "click_loop", "function", "recording")
 CLICKS = ("left click", "right click")
 
 strip = str.strip
@@ -52,6 +43,7 @@ FIELDS = (
     Field("button", "Button", "combo", CLICKS, show=lambda c: _macro(c) and c.type == "click_loop", cfg="key_to_press"),
     Field("function_name", "Function Name", "combo", list_function_names,
           show=lambda c: c.mode == "macro" and (c.onboot or c.type == "function")),
+    Field("recording_name", "Recording", "combo", list_recording_names, show=lambda c: _macro(c) and c.type == "recording"),
     Field("Interval", "Interval", show=_macro, conv=float, omit_blank=True),
     Field("run_once", lambda c: "Toggle" if c.type == "click_loop" else "Run Once", "check", show=_macro),
     Field("toggle", "Toggle", "check", show=lambda c: _macro(c) and c.type != "click_loop"),
