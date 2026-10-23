@@ -25,6 +25,8 @@ class MacroForm(ttk.Frame):
                 w = ttk.Combobox(self, textvariable=var, state="readonly", font=FONT, width=27,
                                  values=() if callable(f.values) else f.values)
                 w.bind("<<ComboboxSelected>>", self._on_pick)
+                if callable(f.values):   # re-read the list (new recordings / scripts) every time the dropdown opens
+                    w.config(postcommand=lambda w=w, f=f: w.config(values=f.values()))
             else:
                 w = ttk.Entry(self, textvariable=var, font=FONT, width=30)
             self.rows[f.id] = (label, w)
